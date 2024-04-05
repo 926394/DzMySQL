@@ -4,6 +4,6 @@ sudo mysql
 use mysql
 
 # Создание БД 
-CREATE DATABASE friends_of_man
+CREATE DATABASE friends_of_man;
 
 
