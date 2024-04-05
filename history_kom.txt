@@ -1,0 +1,107 @@
+
+1991  ls
+ # создание и заполнение файла Домашние животные
+ 1992  cat > pets
+
+ 1993  more pets
+
+ # создание и заполнение файла Вьючные животные
+ 1994  cat > pack_animals
+
+ 1995  more pack_animals
+
+ 1997  more pack_animals
+
+ 1998  more pets
+
+# Объединение двух файлов в один
+ 1999  cat pets pack_animals > animals
+
+# Просмотр содержимого файла
+ 2000  more animals
+
+ 2001  pwd
+
+ 2002  ls
+
+ 2003  pwd
+
+# Переименовать файл, дав ему новое имя (Друзья человека).
+ 2004  mv /home/nikolay/animals /home/nikolay/person_friends
+
+ 2005  ls
+
+ 2006  more animals
+
+ 2007  more person_friends
+
+ 2008  pwd
+
+# Создание директории
+ 2009  /home/nikolay/final_test
+
+ 2010  mkdir /home/nikolay/final_test
+
+ 2011  cd home/nikolay/final_test
+
+ 2012  pwd
+
+ 2013  cd /home/nikolay/final_test
+
+ 2014  pwd
+
+ 2015  cd
+
+ 2016  ls
+
+ 2017  more person_friends
+
+ 2018  ll
+
+# Перемещение файла в созданную директорию
+ 2019  mv person_friends /home/nikolay/final_test/
+
+ 2020  ls
+
+ 2021  cd /home/nikolay/final_test
+
+ 2022  ls
+
+ 2023  cd
+# История команд
+ 2024  history
+
+
+ # Установка MySQL-сервера в Ubuntu
+ 1966  sudo dnf install mysql80-community-release-el7-11.noarch.rpm
+
+ 1967  dnf repolist enabled | grep mysql.*-community
+
+ 2000  sudo apt-get install mysql-server
+
+# Проверка статуса MySQL Community Server
+ 2001  systemctl status mysql
+
+# Установка пакета из репозитория MySQL
+ 2002  sudo apt-get install libmysqlclient21
+
+
+# Установка и удаление deb-пакета с помощью dpkg
+ 2014  sudo dpkg -i mysql-apt-config_0.8.29-1_all.deb
+
+ 2015  sudo dpkg -r mysql-apt-config_0.8.29-1_all.deb
+
+ 2016  sudo dpkg -r mysql-apt-config
+
+ 2017  sudo dpkg -l mysql-apt-config
+
+ 2018  sudo dpkg --purge mysql-apt-config
+
+# Удаление зависимостей
+ 2019  sudo dpkg -l mysql-apt-config
+
+ 2020  history
+
+
+
+
