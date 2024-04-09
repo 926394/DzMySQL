@@ -1,9 +1,10 @@
-# Команды выполняются в Linux терминале
+# Команды выполняются в  терминале Linux
 # вход в MySQL и создание БД
 sudo mysql
 use mysql
 
 # Создание БД 
 CREATE DATABASE friends_of_man;
+
 
 
