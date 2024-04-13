@@ -3,8 +3,8 @@
 sudo mysql
 use mysql
 
-# Создание БД 
+# Создание и использывание БД
 CREATE DATABASE friends_of_man;
-
+USE friends_of_man;
 
 

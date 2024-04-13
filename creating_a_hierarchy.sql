@@ -1,0 +1,250 @@
+-- 1. Создание БД
+CREATE DATABASE friends_of_man;
+/*
+-- Создание БД, если она не существует
+CREATE DATABASE IF NOT EXISTS friends_of_man;
+*/
+
+
+-- 2. Подключение к БД
+USE friends_of_man;
+
+-- 3. Создание таблицы animals
+-- DROP TABLE animals; -- удаление таблицы
+DROP TABLE IF EXISTS animals; -- удаление таблицы если она существует
+CREATE TABLE IF NOT EXISTS animals -- Создание таблицы, если она не существует
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    animal_category VARCHAR(45)
+);
+DESCRIBE animals; -- просмотр структуры таблицы
+
+-- 4. Заполнение таблицы данными 
+TRUNCATE animals; -- что бы не было задвоения таблицы
+INSERT animals (animal_category)
+VALUES
+ ('Домашние животные'),
+ ('Вьючные животные');
+
+
+
+-- 5. Создание таблицы "Домашние животные"
+DROP TABLE IF EXISTS pets; -- удаление таблицы если онасуществует
+CREATE TABLE IF NOT EXISTS pets
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    pets VARCHAR(45),
+    pets_id INT,
+    FOREIGN KEY (pets_id) REFERENCES animals(id)
+);
+
+-- 6. Заполнение таблицы данными 
+TRUNCATE pets; -- что бы не было задвоения таблицы
+INSERT pets (pets, pets_id)
+VALUES
+ ('собаки', 1),
+ ('кошки', 1),
+ ('хомяки', 1);
+
+
+-- 7. Создание таблицы "Вьючные животные"
+DROP TABLE IF EXISTS pack_animals; -- удаление таблицы если онасуществует
+CREATE TABLE IF NOT EXISTS pack_animals
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    pack_animals VARCHAR(45),
+    pack_animals_id INT,
+    FOREIGN KEY (pack_animals_id) REFERENCES animals(id)
+    
+);
+
+-- 8. Заполнение таблицы данными 
+TRUNCATE pack_animals; -- что бы не было задвоения таблицы
+INSERT pack_animals (pack_animals, pack_animals_id)
+VALUES
+ ('лошади', 2),
+ ('верблюды', 2),
+ ('ослы', 2);
+
+
+-- 9. Вывод животных с присвоенной им категории
+SELECT
+	a.animal_category, -- (3) a это псевдоним таблицы animals. animal_category это атрибут столбца
+	-- p.pets,-- p это псевдоним таблицы pets. pets это атрибут столбца
+	-- с.pack_animals,
+    coalesce (p.pets, с.pack_animals) as all_animals -- объединение двух столбцов из разных таблиц
+FROM animals a -- (1) псевдоним можно прописать и без AS, через пробел
+LEFT JOIN pets p ON p.pets_id = a.id -- (2)
+LEFT JOIN pack_animals с ON с.pack_animals_id = a.id;
+
+/*
+SELECT
+	a.animal_category, -- (3) a это псевдоним таблицы animals. animal_category это атрибут столбца
+	с.pack_animals -- 
+FROM animals a -- (1) псевдоним можно прописать и без AS, через пробел
+JOIN pack_animals с -- INNER JOIN = JOIN (сокращенная форма)
+ON с.pack_animals_id = a.id; -- (2)
+*/
+
+-- 10. Создание таблицы "собаки"
+DROP TABLE IF EXISTS dogs; -- удаление таблицы если онасуществует
+CREATE TABLE IF NOT EXISTS dogs
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    dogs_name VARCHAR(45),
+    command VARCHAR(45),
+    birthday DATE,
+    dogs_id INT,
+    FOREIGN KEY (dogs_id) REFERENCES pets(id)
+    
+);
+
+-- 11. Заполнение таблицы данными 
+TRUNCATE dogs; -- что бы не было задвоения таблицы
+INSERT dogs (dogs_name, command, birthday, dogs_id)
+VALUES
+ ('рекс', 'Рядом!', '1998.04.11', 1),
+ ('танк', 'Фу!', '1981.05.01', 1),
+ ('мегазавр', 'Стоять!', '1982.08.17', 1);
+ 
+ 
+-- 12. Создание таблицы "кошки"
+DROP TABLE IF EXISTS cats; -- удаление таблицы если онасуществует
+CREATE TABLE IF NOT EXISTS cats
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    cats_name VARCHAR(45),
+    command VARCHAR(45),
+    birthday DATE,
+    cats_id INT,
+    FOREIGN KEY (cats_id) REFERENCES pets(id)
+    
+);
+
+-- 13. Заполнение таблицы данными 
+TRUNCATE cats; -- что бы не было задвоения таблицы
+INSERT cats (cats_name, command, birthday, cats_id)
+VALUES
+ ('маруся', 'дай лапу', '1987.04.11', 2),
+ ('леди', 'ползи', '1984.05.01', 2),
+ ('фрося', 'полос', '1989.08.17', 2);
+
+
+-- 14. Создание таблицы "хомяки"
+DROP TABLE IF EXISTS hamsters; -- удаление таблицы если онасуществует
+CREATE TABLE IF NOT EXISTS hamsters
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    hamsters_name VARCHAR(45),
+    command VARCHAR(45),
+    birthday DATE,
+    hamsters_id INT,
+    FOREIGN KEY (hamsters_id) REFERENCES pets(id)
+    
+);
+
+-- 15. Заполнение таблицы данными 
+TRUNCATE hamsters; -- что бы не было задвоения таблицы
+INSERT hamsters (hamsters_name, command, birthday, hamsters_id)
+VALUES
+ ('марк', 'нет команд', '2019.04.11', 3),
+ ('хома', 'смирно', '2018.05.01', 3),
+ ('люся', 'по кругу', '2020.08.17', 3);
+ 
+
+ 
+ -- 16. Создание таблицы "лошади"
+DROP TABLE IF EXISTS horses; -- удаление таблицы если онасуществует
+CREATE TABLE IF NOT EXISTS horses
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    horses_name VARCHAR(45),
+    command VARCHAR(45),
+    birthday DATE,
+    horses_id INT,
+    FOREIGN KEY (horses_id) REFERENCES pack_animals(id)
+    
+);
+
+-- 17. Заполнение таблицы данными 
+TRUNCATE horses; -- что бы не было задвоения таблицы
+INSERT horses (horses_name, command, birthday, horses_id)
+VALUES
+ ('Апполон', 'Вперёд', '2007.04.11', 1),
+ ('Беркут', 'Рысь', '2011.05.01', 1),
+ ('Алиса', 'Шагом', '2012.08.17', 1);
+
+ 
+  -- 18. Создание таблицы "верблюды"
+DROP TABLE IF EXISTS camels; -- удаление таблицы если онасуществует
+CREATE TABLE IF NOT EXISTS camels
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    camels_name VARCHAR(45),
+    command VARCHAR(45),
+    birthday DATE,
+    camels_id INT,
+    FOREIGN KEY (camels_id) REFERENCES pack_animals(id)
+    
+);
+
+-- 19. Заполнение таблицы данными 
+TRUNCATE camels; -- что бы не было задвоения таблицы
+INSERT camels (camels_name, command, birthday, camels_id)
+VALUES
+ ('Махмут', 'Гит!-иди!', '2005.04.11', 2),
+ ('Александрия', 'Дурр!-стоять!', '2001.05.01', 2),
+ ('Каир', 'Каш!-лежать!', '2009.08.17', 2);
+
+ 
+-- 20. Создание таблицы "ослы"
+DROP TABLE IF EXISTS donkeys; -- удаление таблицы если онасуществует
+CREATE TABLE IF NOT EXISTS donkeys
+(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    donkeys_name VARCHAR(45),
+    command VARCHAR(45),
+    birthday DATE,
+    donkeys_id INT,
+    FOREIGN KEY (donkeys_id) REFERENCES pack_animals(id)
+    
+);
+
+-- 21. Заполнение таблицы данными 
+TRUNCATE donkeys; -- что бы не было задвоения таблицы
+INSERT donkeys (donkeys_name, command, birthday, donkeys_id)
+VALUES
+ ('Лиз', 'Иди', '2019.04.11', 3),
+ ('Берти', 'Стой', '2018.05.01', 3),
+ ('Дюна', 'лежать!', '2016.08.17', 3);
+ 
+ 
+  -- Вывод содержания таблицы
+ SELECT * FROM animals;
+ 
+ SELECT * FROM pets;
+ SELECT * FROM dogs;
+ SELECT * FROM cats;
+ SELECT * FROM hamsters;
+ 
+ SELECT * FROM pack_animals;
+ SELECT * FROM horses;
+ SELECT * FROM camels;
+ SELECT * FROM donkeys;
+ 
+ -- 22. Произведение нормализации таблицы
+ -- ALTER TABLE pack_animals;
+ DELETE FROM pack_animals
+ -- DROP pack_animals = 'верблюды';
+ WHERE pack_animals = 'верблюды';
+ SELECT * FROM pack_animals;
+ 
+/* -- 23. Объединение таблиц 
+ CREATE TABLE pack_animals AS (
+SELECT * 
+  FROM horses h
+  LEFT JOIN table2 t2 ON t1.email=t2.email AND t1.base_name=t2.base_name AND t1.location=t2.location
+  
+  LEFT JOIN tableN tN ON tN-1.email=tN.email AND tN-1.base_name=tN.base_name AND tN-1.location=tN.location
+
+)
